@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,7 +22,7 @@ const queryClient = new QueryClient();
 const AppRoutes = () => {
   const { user } = useAuth();
   const { isTabVisible } = useTabVisibility();
-  
+
   return (
     <>
       {/* Only show NavBar when user is authenticated */}
@@ -34,35 +33,47 @@ const AppRoutes = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/library" element={<Library />} />
           <Route path="/contact" element={<Contact />} />
-          
+
           {/* Protected route for SH Sellers.json - check if tab is visible for the user's role */}
-          <Route path="/my-library" element={
-            <ProtectedRoute>
-              {isTabVisible('my-library') ? <SellersJson /> : <Index />}
-            </ProtectedRoute>
-          } />
-          
+          <Route
+            path="/my-library"
+            element={
+              <ProtectedRoute>
+                {isTabVisible("my-library") ? <SellersJson /> : <Index />}
+              </ProtectedRoute>
+            }
+          />
+
           {/* Protected route for Explore tab - check if tab is visible for the user's role */}
-          <Route path="/explore" element={
-            <ProtectedRoute>
-              {isTabVisible('explore') ? <Explore /> : <Index />}
-            </ProtectedRoute>
-          } />
-          
+          <Route
+            path="/explore"
+            element={
+              <ProtectedRoute>
+                {isTabVisible("explore") ? <Explore /> : <Index />}
+              </ProtectedRoute>
+            }
+          />
+
           {/* Redirect root to Market Lines for authenticated users */}
-          <Route path="/" element={
-            <ProtectedRoute>
-              <Index />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/settings" element={
-            <ProtectedRoute requireAdmin={true}>
-              <Settings />
-            </ProtectedRoute>
-          } />
-          
-          {/* Add additional routes above the catch-all */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Index />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute requireAdmin={true}>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Catch-all route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
@@ -75,7 +86,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      {/* 👇 Add basename here for GitHub Pages */}
+      <BrowserRouter basename="/Test_">
         <AuthProvider>
           <AppRoutes />
         </AuthProvider>
